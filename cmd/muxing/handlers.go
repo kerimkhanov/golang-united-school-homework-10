@@ -42,5 +42,6 @@ func headersHandle(w http.ResponseWriter, r *http.Request) {
 		}
 		res += number
 	}
-	w.Header().Add("a+b", strconv.Itoa(res))
+	w.Header().Set("a+b", strconv.Itoa(res))
+	w.WriteHeader(http.StatusOK)
 }
