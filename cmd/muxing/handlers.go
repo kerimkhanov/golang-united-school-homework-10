@@ -15,17 +15,19 @@ func nameParamHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func badHandle(w http.ResponseWriter, r *http.Request) {
-	status := http.StatusText(http.StatusInternalServerError)
-	http.Error(w, status, http.StatusInternalServerError)
+	w.WriteHeader(http.StatusInternalServerError)
 }
 
+func mainPage(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+}
 func dataHandle(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "Can not read req body", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	fmt.Fprintf(w, "I got message: \n%s", body)
+	w.Write([]byte("I got message:\n" + string(body)))
 }
 
 func headersHandle(w http.ResponseWriter, r *http.Request) {
